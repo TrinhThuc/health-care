@@ -81,7 +81,7 @@ services:
       
       #AUTH_PROVIDERS : "google"
       
-      PUBLIC_URL: "/"
+      PUBLIC_URL: "http://162.248.102.236:8055"
       
       EXTENSIONS_PATH : "./extensions/"
       #EXTENSIONS_AUTO_RELOAD : "true"
@@ -107,6 +107,24 @@ services:
       # Make sure to set this in production
       # (see https://docs.directus.io/self-hosted/config-options#general)
       # PUBLIC_URL: 'https://directus.example.com'
+
+      EMAIL_TEMPLATES_PATH: './templates'
+      EMAIL_FROM: "trinhthuc130902@gmail.com"
+      ## Email (SMTP Transport)
+      # EMAIL_SMTP_HOST: "localhost"
+      EMAIL_TRANSPORT: "smtp"
+      EMAIL_SMTP_HOST: "smtp.gmail.com"
+      # Use SMTP pooling
+      EMAIL_SMTP_POOL: true
+      EMAIL_SMTP_PORT: 587
+      EMAIL_SMTP_SECURE: false # Use TLS
+      EMAIL_SMTP_IGNORE_TLS: false
+      EMAIL_SMTP_USER: "trinhthuc130902@gmail.com"
+      # EMAIL_SMTP_PASSWORD: "vttl bevl zbav lvjd"
+      EMAIL_SMTP_PASSWORD: "gkkt dvcr sbry mcya"
+
+      USER_REGISTER_URL_ALLOW_LIST:  "http://162.248.102.236:8055"
+
 
 networks:
   directus:
