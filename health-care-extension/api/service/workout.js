@@ -1,49 +1,12 @@
-async function getBmi({
-    req,
-    res
-}, {
-    services,
-    database,
-    getSchema,
-    env,
-    logger,
-    emitter
-}) {
-    const {
-        ItemsService
-    } = services;
-    const userService = new ItemsService('directus_users', {
-        accountability: req.accountability,
-        schema: req.schema,
-    });
-    try {
-        const currentUser = await userService.readOne(req.accountability.user);
-        logger.info(currentUser);
-
-        const height = currentUser.height;
-        const weight = currentUser.weight;
-        let bmi = 0;
-        if (height && weight) {
-            bmi = weight / (height * height);
-        }
-        res.status(200).json({
-            data: {
-                bmi: bmi.toFixed(1)
-            }
-        });
-    } catch (error) {
-        if (!error.status) {
-            error.status = 503;
-        }
-        res.status(error.status).json({
-            error: error,
-            message: error.message
-        });
-    }
-}
+import {
+    ForbiddenError,
+    InvalidPayloadError,
+    InvalidQueryError
+} from '@directus/errors';
+let Logger;
 
 const DIFFICULTY_DEFAULT = "EASY";
-async function getWorkoutDetail({
+export async function getWorkoutDetail({
     req,
     res
 }, {
@@ -57,7 +20,8 @@ async function getWorkoutDetail({
     const {
         ItemsService
     } = services;
-    new ItemsService('directus_users', {
+    Logger = logger;
+    const userService = new ItemsService('directus_users', {
         accountability: req.accountability,
         schema: req.schema,
     });
@@ -113,7 +77,7 @@ async function getWorkoutDetail({
         });
     } catch (error) {
         if (!error.status) {
-            error.status = 503;
+            error.status = 503
         }
         res.status(error.status).json({
             error: error,
@@ -121,42 +85,3 @@ async function getWorkoutDetail({
         });
     }
 }
-
-var index = (router, {
-	services,
-	database,
-	getSchema,
-	env,
-	logger,
-	emitter
-}) => {
-	router.get('/users/bmi', async (req, res) => {
-		await getBmi({
-			req,
-			res
-		}, {
-			services,
-			database,
-			getSchema,
-			env,
-			logger,
-			emitter
-		});
-	});
-
-	router.get('/workouts/:id', async (req, res) => {
-		await getWorkoutDetail({
-			req,
-			res
-		}, {
-			services,
-			database,
-			getSchema,
-			env,
-			logger,
-			emitter
-		});
-	});
-};
-
-export { index as default };
