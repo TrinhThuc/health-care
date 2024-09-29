@@ -65,9 +65,14 @@ async function getWorkoutDetail({
         accountability: req.accountability,
         schema: req.schema,
     });
+    const workoutScheduleService = new ItemsService('workout_schedule', {
+        accountability: req.accountability,
+        schema: req.schema,
+    });
     try {
         logger.info(req);
         const workoutId = req.params.id;
+        const currentUserId = req.accountability.user;
         let difficulityReq = req.query.difficulity;
         if (!difficulityReq) {
             difficulityReq = DIFFICULTY_DEFAULT;
@@ -108,6 +113,26 @@ async function getWorkoutDetail({
         workout["total_exercise"] = total_exercise;
         workout["total_exercise_time"] = total_exercise_time;
         workout["total_calories_burn"] = total_calories_burn;
+
+        const currentTime = new Date();
+        const workoutSchedule = await workoutScheduleService.readByQuery({
+            fields: ["*"],
+            filter: {
+                _and: [{
+                        user_id: {
+                            _eq: currentUserId
+                        }
+                    },
+                    {
+                        scheduled_execution_time: {
+                            _gte: currentTime
+                        }
+                    }
+                ]
+            },
+            limit: 1
+        });
+        workout["workout_schedule"] = workoutSchedule;
         res.status(200).json({
             data: workout
         });
