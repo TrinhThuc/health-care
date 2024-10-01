@@ -6,6 +6,10 @@ import {
 	getWorkoutDetail
 } from "../service/workout";
 
+import {
+	getMealSchedule
+} from "../service/meal";
+
 export default (router, {
 	services,
 	database,
@@ -30,6 +34,20 @@ export default (router, {
 
 	router.get('/workouts/:id', async (req, res) => {
 		await getWorkoutDetail({
+			req,
+			res
+		}, {
+			services,
+			database,
+			getSchema,
+			env,
+			logger,
+			emitter
+		});
+	});
+
+	router.get('/meal_schedule', async (req, res) => {
+		await getMealSchedule({
 			req,
 			res
 		}, {
