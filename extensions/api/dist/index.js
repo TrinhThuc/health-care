@@ -168,7 +168,7 @@ async function getMealSchedule({
     const mealScheduleConfigService = new ItemsService('meal_schedule_config', {
         accountability: req.accountability,
         schema: req.schema,
-    });
+    }); 
 
     const nutritionCatalogService = new ItemsService('nutrition_catalog', {
         accountability: req.accountability,
