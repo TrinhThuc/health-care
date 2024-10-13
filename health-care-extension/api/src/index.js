@@ -11,7 +11,7 @@ import {
 } from "../service/meal";
 
 import {
-	getLatest
+	getLatest, getNearest
 } from "../service/activity";
 
 export default (router, {
@@ -66,6 +66,20 @@ export default (router, {
 
 	router.get('/activity/latest', async (req, res) => {
 		await getLatest({
+			req,
+			res
+		}, {
+			services,
+			database,
+			getSchema,
+			env,
+			logger,
+			emitter
+		});
+	});
+	
+	router.get('/activity/nearest', async (req, res) => {
+		await getNearest({
 			req,
 			res
 		}, {
