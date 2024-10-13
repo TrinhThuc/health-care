@@ -79,6 +79,7 @@ export async function getWorkoutDetail({
         workout["total_calories_burn"] = total_calories_burn;
 
         const currentTime = new Date();
+        currentTime.setHours(currentTime.getHours() + 7);
         const workoutSchedule = await workoutScheduleService.readByQuery({
             fields: ["*"],
             filter: {

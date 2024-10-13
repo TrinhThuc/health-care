@@ -10,6 +10,10 @@ import {
 	getMealSchedule
 } from "../service/meal";
 
+import {
+	getLatest
+} from "../service/activity";
+
 export default (router, {
 	services,
 	database,
@@ -48,6 +52,20 @@ export default (router, {
 
 	router.get('/meal_schedule', async (req, res) => {
 		await getMealSchedule({
+			req,
+			res
+		}, {
+			services,
+			database,
+			getSchema,
+			env,
+			logger,
+			emitter
+		});
+	});
+
+	router.get('/activity/latest', async (req, res) => {
+		await getLatest({
 			req,
 			res
 		}, {
