@@ -33,7 +33,7 @@ export async function getLatest({
         const currentUserId = req.accountability.user;
         let limit = req.query.limit ? req.query.limit : LIMIT_DEFAULT;
         const currentTime = new Date();
-        currentTime.setHours(currentTime.getHours() + 7);
+        // currentTime.setHours(currentTime.getHours() + 7);
         console.log(currentTime);
         const workoutSchedules = await workoutScheduleService.readByQuery({
             fields: ["*", "workout_id.*"],
@@ -129,7 +129,7 @@ export async function getNearest({
         const currentUserId = req.accountability.user;
         let limit = req.query.limit ? req.query.limit : LIMIT_DEFAULT;
         const currentTime = new Date();
-        currentTime.setHours(currentTime.getHours() + 7);
+        // currentTime.setHours(currentTime.getHours() + 7);
         console.log(currentTime);
         const workoutSchedules = await workoutScheduleService.readByQuery({
             fields: ["*", "workout_id.*"],
