@@ -181,13 +181,25 @@ async function getMealSchedule({
         if (!dateReq) {
             dateReq = new Date();
         } else {
-            dateReq = new Date(dateReq);
+            dateReq = new Date(`${dateReq}T00:00:00.000Z`);
         }
-        const startOfDay = new Date(dateReq);
-        startOfDay.setHours(0, 0, 0, 0);
+        const startOfDay = new Date(Date.UTC(
+            dateReq.getUTCFullYear(),
+            dateReq.getUTCMonth(),
+            dateReq.getUTCDate()
+        ));
+        
+        const endOfDay = new Date(Date.UTC(
+            dateReq.getUTCFullYear(),
+            dateReq.getUTCMonth(),
+            dateReq.getUTCDate(),
+            23, 59, 59, 999
+        ));
 
-        const endOfDay = new Date(dateReq);
-        endOfDay.setHours(23, 59, 59, 999);
+        console.log(startOfDay);
+        console.log(endOfDay);
+
+
 
 
         const mealScheduleConfigs = await mealScheduleConfigService.readByQuery({
